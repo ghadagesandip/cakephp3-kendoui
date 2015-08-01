@@ -1,30 +1,45 @@
-<div class="actions columns large-2 medium-3">
-    <h3><?= __('Actions') ?></h3>
-    <ul class="side-nav">
-        <li><?= $this->Html->link(__('List Users'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Bookmarks'), ['controller' => 'Bookmarks', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Bookmark'), ['controller' => 'Bookmarks', 'action' => 'add']) ?> </li>
-    </ul>
-</div>
-<div class="users form large-10 medium-9 columns">
-    <?= $this->Form->create($user); ?>
-    <fieldset>
+<div class="row">
+    <div class="col-lg-2">
+        <a href="<?php echo $this->Url->build(array('controller'=>'users','action'=>'index'))?>" class="btn"> List Users</a>
+    </div>
+    <div class="col-lg-10 fieldlist">
+        <?= $this->Form->create($user); ?>
 
-        <legend><?= __('Add User') ?></legend>
+            <legend><?= __('Add User') ?></legend>
+            <div class="form-group">
+                <?php echo $this->Form->input('email',array('class'=>'form-control')); ?>
+            </div>
 
-        <?php
-            echo $this->Form->input('email');
-            echo $this->Form->input('password');
-            echo $this->Form->input('confirm_password',array('type'=>'password'));
-            echo $this->Form->input('first_name');
-            echo $this->Form->input('last_name');
-            echo $this->Form->input('gender',array('label'=>'Male'));
-        ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit',array('class'=>'kbutton'))) ?>
-    <?= $this->Form->end() ?>
+            <div class="form-group">
+                <?php echo $this->Form->input('password',array('class'=>'form-control')); ?>
+            </div>
 
-    <input id="datepicker" />
-    <p>Animal: <input id="animal" /></p>
+            <div class="form-group">
+                <?php echo $this->Form->input('confirm_password',array('class'=>'form-control')); ?>
+            </div>
 
+            <div class="form-group">
+                <?php echo $this->Form->input('first_name',array('class'=>'form-control')); ?>
+            </div>
+
+            <div class="form-group">
+                <?php echo $this->Form->input('last_name',array('class'=>'form-control')); ?>
+            </div>
+
+            <div class="form-group">
+                <input type="radio" name="data[User][gender]" id="engine1" class="k-radio" checked="checked">
+                <label class="k-radio-label" for="engine1">Male</label>
+
+                <input type="radio" name="data[User][gender]" id="engine2" class="k-radio">
+                <label class="k-radio-label" for="engine2">Female</label>
+
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Add user" class="btn k-primary"/>
+            </div>
+
+            <?= $this->Form->end() ?>
+
+    </div>
 </div>

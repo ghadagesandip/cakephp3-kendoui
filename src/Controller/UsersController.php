@@ -22,7 +22,7 @@ class UsersController extends AppController
     {
 
         if ($this->request->is('post')) {
-
+            //echo '<pre>'; print_r($this->request->data);exit;
             $user = $this->Auth->identify();
             //echo '<pre>'; print_r($user);exit;
             if ($user) {

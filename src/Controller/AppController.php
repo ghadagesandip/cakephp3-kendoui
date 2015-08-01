@@ -13,7 +13,9 @@
  * @license   http://www.opensource.org/licenses/mit-license.php MIT License
  */
 namespace App\Controller;
+use Cake\Controller\Component\AuthComponent;
 use Cake\Controller\Controller;
+use Cake\Event\Event;
 
 /**
  * Application Controller
@@ -55,6 +57,14 @@ class AppController extends Controller
                 ]
             ]
         );
+    }
+
+    public function beforeFilter(Event $event){
+        if($this->Auth->user('id')){
+            $this->layout = 'loggedin';
+        }else{
+            $this->layout = 'default';
+        }
     }
 
 }
