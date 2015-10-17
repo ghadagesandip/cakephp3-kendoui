@@ -1,0 +1,30 @@
+<div class="request-quote" ng-controller="RequestQuoteController">
+    <form name="form" ng-submit="handleform();" novalidate class="css-form">
+        <ul class="r-form">
+            <li>
+                <input ng-class="{ngerror:submitted && form.name.$error.required}"  type="text" name="name" data-ng-model="rq.name" placeholder="Your Name*" required>
+            </li>
+            <li>
+                <input ng-class="{ngerror:submitted && (form.email.$error.required || form.email.$error.email)}" type="email" name="email" data-ng-model="rq.email" placeholder="Your Email" overwrite-email required>
+            </li>
+            <li>
+                <input ng-class="{ngerror:submitted && (form.mobile.$error.required || form.mobile.$error.phonenumber)}" type="text" name="mobile" data-ng-model="rq.mobile" placeholder="eg. +91 2240500609" phonenumber required />
+            </li>
+            <li>
+                <input ng-class="{ngerror:submitted && form.message.$error.required}" type="text" name="message" data-ng-model="rq.message" placeholder="Messages*" required>
+            </li>
+            <li><label>Captcha* <img class="captchaImg" alt="" src="<?php echo Router::url('/', true).'captcha'; ?>" style="width: 71px; display: inline;"></label>
+                <input ng-class="{ngerror:submitted && form.captcha.$error.required}" type="text" name="captcha" data-ng-model="rq.captcha" placeholder="" required>
+            </li>
+            <li class="r-submit">
+                <input type="submit" value="Submit"  ng-click="submitted=true" onClick="ga('request quote ', 'event', { eventCategory: 'quote', eventAction: 'submit', eventLabel: 'Submit'});"/>
+                <div ng-show="formsentsuccessfully"  class="submit-hint">Thank you for sending quote request.</div>
+            </li>
+        </ul>
+    </form>
+    <?php echo $this->Form->end();?>
+</div>
+
+<style type="text/css">
+    .ngerror{border: 1px solid red !important;}
+</style>

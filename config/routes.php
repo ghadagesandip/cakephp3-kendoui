@@ -77,12 +77,21 @@ Router::scope('/', function ($routes) {
     $routes->resources('Users');
 });
 
-Router::scope('/api', function ($routes) {
-    $routes->extensions(['json', 'xml']);
-});
+
+
 
 /**
  * Load all plugin routes.  See the Plugin documentation on
  * how to customize the loading of plugin routes.
  */
 Plugin::routes();
+
+Router::prefix('Admin', function ($routes) {
+    $routes->fallbacks('InflectedRoute');
+});
+
+Router::prefix('Api', function ($routes) {
+    $routes->extensions(['json','xml']);
+    $routes->resources('Users');
+    $routes->resources('Tags');
+});

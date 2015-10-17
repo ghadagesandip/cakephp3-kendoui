@@ -24,3 +24,7 @@ the setup traffic lights.
 
 Read and edit `config/app.php` and setup the 'Datasources' and any other
 configuration relevant for your application.
+
+
+# Kendoui documentation important links
+1) grid api : http://docs.telerik.com/kendo-ui/api/javascript/ui/grid

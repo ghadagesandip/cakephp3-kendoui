@@ -22,29 +22,35 @@ $(function() {
                 { text: "Heading 2", value: 2 },
                 { text: "Heading 3", value: 3 },
                 { text: "Title", value: 4 },
-                { text: "Subtitle", value: 5 }
+                { text: "Subtitle", value: 5 },
             ]
         });
 
-
+    
     $("#user-grid").kendoGrid({
         dataSource: {
-            type: "odata",
-            transport: {
-                read: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Orders"
+            transport:{
+                read :{
+                    url : "http://localhost/cakephp3-kendoui/api/users.json",
+                    dataType: "json"
+                }
             },
             schema: {
                 model: {
+                    id: "id",
                     fields: {
-                        OrderID: { type: "number" },
-                        Freight: { type: "number" },
-                        ShipName: { type: "string" },
-                        OrderDate: { type: "date" },
-                        ShipCity: { type: "string" }
+                        id: { type: "number", editable:false },
+                        first_name: { type: "string" },
+                        last_name: { type: "string" },
+                        gender: { type: "string" },
+                        email: { type: "string" }
                     }
+                },
+                data : function(response){
+                    return response['Users'];
                 }
             },
-            pageSize: 20,
+            pageSize: 1,
             serverPaging: true,
             serverFiltering: true,
             serverSorting: true
@@ -53,22 +59,34 @@ $(function() {
         filterable: true,
         sortable: true,
         pageable: true,
-        columns: [{
-            field:"OrderID",
-            filterable: false
+        editable: {
+            mode: "popup"
         },
-            "Freight",
-            {
-                field: "OrderDate",
-                title: "Order Date",
-                format: "{0:MM/dd/yyyy}"
-            }, {
-                field: "ShipName",
-                title: "Ship Name"
-            }, {
-                field: "ShipCity",
-                title: "Ship City"
+        columns: [
+            {field:"id", title:"ID"},
+            {field: "first_name",  title: "First Name"},
+            {field: "last_name",  title: "Last Name"},
+            {field: "gender", title: "Gender"},
+            {field: "email", title: "Email"},
+            { command: [
+                { name: "edit", text: { edit: "", cancel: "Cancel", update: "Update" } },
+                { name: "destroy", text: "" },
+                {
+                    name: "details",
+                    text:"View",
+                    click: function(e) {
+                        // e.target is the DOM element representing the button
+                        var tr = $(e.target).closest("tr"); // get the current table row (tr)
+                        // get the data bound to the current table row
+                        var data = this.dataItem(tr);
+                        console.log("Details for: " + data.name);
+                    }
+                },
+
+            ]
             }
+
         ]
     });
+
 });
