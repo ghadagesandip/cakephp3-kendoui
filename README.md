@@ -25,6 +25,30 @@ the setup traffic lights.
 Read and edit `config/app.php` and setup the 'Datasources' and any other
 configuration relevant for your application.
 
+# how to setup application?
+1. Clone repo
+2. Run composer update command
+```bash
+composer update
+```
+3. Copy app.default.php file to app.php
+4. Create tmp and logs dir and set write permission to these dirs.
+5. create database import database from db/cake3-kendoui.sql dir.
+6. set databse connection in config/app.php file
+```php
+'Datasources' => [
+        'default' => [
+            'className' => 'Cake\Database\Connection',
+            'driver' => 'Cake\Database\Driver\Mysql',
+            'persistent' => false,
+            'host' => 'localhost',
+            'username' => 'username',
+            'password' => 'password',
+            'database' => 'dbname',
+            'encoding' => 'utf8',
+            'timezone' => 'UTC',
+            'cacheMetadata' => true,
+```
 
 # Kendoui documentation important links
 1) grid api : http://docs.telerik.com/kendo-ui/api/javascript/ui/grid
