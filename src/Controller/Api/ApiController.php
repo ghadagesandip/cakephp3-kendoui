@@ -20,10 +20,10 @@ class ApiController extends AppController
     }
 
     public function beforeFilter(Event $event){
-        parent::beforeFilter($event);
-        $this->Auth->allow(['index']);
-        $this->responseObjName = $this->tableName = $this->request->params['controller'];
 
+        parent::beforeFilter($event);
+        $this->Auth->allow(['index','add','edit','delete']);
+        $this->responseObjName = $this->tableName = $this->request->params['controller'];
     }
 
     /**

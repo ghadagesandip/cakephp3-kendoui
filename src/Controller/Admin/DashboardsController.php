@@ -22,7 +22,6 @@ class DashboardsController extends AppController
 
     public function index(){
 
-        $this->layout ='loggedin';
         $name = $this->Auth->user('first_name').' '.$this->Auth->user('last_name');
         $this->set(compact('name'));
     }

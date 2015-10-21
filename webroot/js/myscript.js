@@ -29,10 +29,24 @@ $(function() {
     
     $("#user-grid").kendoGrid({
         dataSource: {
+            toolbar: ["excel"],
             transport:{
                 read :{
-                    url : "http://localhost/cakephp3-kendoui/api/users.json",
-                    dataType: "json"
+                    url : "\/cakephp3-kendoui/api/users.json",
+                    dataType: "json",
+                    type: "GET"
+                },
+                update: {
+                    url: function(data){
+                        return "\/cakephp3-kendoui/api/users/"+data.id+".json"
+                    },
+                    type: "PUT"
+                },
+                destroy: {
+                    url: function(data){
+                        return "\/cakephp3-kendoui/api/users/"+data.id+".json"
+                    },
+                    type: "DELETE"
                 }
             },
             schema: {
