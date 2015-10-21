@@ -61,9 +61,9 @@ class AppController extends Controller
 
     public function beforeFilter(Event $event){
         if($this->Auth->user('id')){
-            $this->layout = 'loggedin';
+            $this->viewBuilder()->layout('loggedin');
         }else{
-            $this->layout = 'default';
+            $this->viewBuilder()->layout('default');
         }
     }
 
