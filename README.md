@@ -49,6 +49,10 @@ composer update
             'timezone' => 'UTC',
             'cacheMetadata' => true,
 ```
-
+6. Go to http://localhost/cakephp3-kendoui/
+7. use following credentials for login
+ > username : sandip@gmail.com
+ > password : sandip
+ 
 # Kendoui documentation important links
 1) grid api : http://docs.telerik.com/kendo-ui/api/javascript/ui/grid
