@@ -27,9 +27,7 @@
     $this->Flash->render();
     $this->Flash->render('auth');
     ?>
-    <div class="container">
     <?= $this->fetch('content') ?>
-    </div>
 </div>
 <footer class="footer">
     <div class="container">

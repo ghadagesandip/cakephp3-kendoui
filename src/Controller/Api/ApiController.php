@@ -4,6 +4,8 @@ namespace App\Controller\Api;
 use App\Controller\AppController;
 use Cake\Event\Event;
 use Cake\Cache\Cache;
+use Cake\View\Helper\PaginatorHelper;
+
 
 
 class ApiController extends AppController
@@ -26,6 +28,10 @@ class ApiController extends AppController
         $this->responseObjName = $this->tableName = $this->request->params['controller'];
     }
 
+    public $paginate = [
+        'limit' => 1,
+    ];
+
     /**
      * Index method
      *
@@ -33,7 +39,16 @@ class ApiController extends AppController
      */
     public function index()
     {
-        $this->responseData = $this->{$this->tableName}->find('all');
+
+
+        $this->responseData['paging']= array('Users'=>array(
+            'page'=>1,
+            'current'=>1,
+            'count'=>2,
+            'limit'=>10,
+        ));
+        $this->responseData['children'] = $this->paginate();
+
     }
 
     /**

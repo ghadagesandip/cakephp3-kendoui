@@ -26,53 +26,71 @@ $(function() {
             ]
         });
 
-    
-    $("#user-grid").kendoGrid({
-        dataSource: {
-            toolbar: ["excel"],
-            transport:{
-                read :{
-                    url : "\/cakephp3-kendoui/api/users.json",
-                    dataType: "json",
-                    type: "GET"
-                },
-                update: {
-                    url: function(data){
-                        return "\/cakephp3-kendoui/api/users/"+data.id+".json"
-                    },
-                    type: "PUT"
-                },
-                destroy: {
-                    url: function(data){
-                        return "\/cakephp3-kendoui/api/users/"+data.id+".json"
-                    },
-                    type: "DELETE"
-                }
+    var userDataSource = new kendo.data.DataSource({
+        transport:{
+            read :{
+                url : "\/cakephp3-kendoui/api/users.json",
+                dataType: "json",
+                type: "GET"
             },
-            schema: {
-                model: {
-                    id: "id",
-                    fields: {
-                        id: { type: "number", editable:false },
-                        first_name: { type: "string" },
-                        last_name: { type: "string" },
-                        gender: { type: "string" },
-                        email: { type: "string" }
-                    }
-                },
-                data : function(response){
-                    return response['Users'];
-                }
+            create: {
+                url:  "\/cakephp3-kendoui/api/users.json",
+                type: "POST"
             },
-            pageSize: 1,
-            serverPaging: true,
-            serverFiltering: true,
-            serverSorting: true
+            update: {
+                url: function(data){
+                    return "\/cakephp3-kendoui/api/users/"+data.id+".json"
+                },
+                type: "PUT"
+            },
+            destroy: {
+                url: function(data){
+                    return "\/cakephp3-kendoui/api/users/"+data.id+".json"
+                },
+                type: "DELETE"
+            }
         },
+        schema: {
+            model: {
+                id: "id",
+                fields: {
+                    id: { type: "number", editable:false },
+                    first_name: { type: "string" },
+                    last_name: { type: "string" },
+                    gender: { type: "string" },
+                    email: { type: "string" }
+                }
+            },
+            data : function(response){
+                return response.Users.children;
+            },
+            error: function(e) {
+                console.log(e.errors); // displays "Invalid query"
+            },
+            total: function(response) {
+                return response.Users.paging.Users.count;
+            }
+        },
+        batch: true,
+        page:1,
+        pageSize: 1,
+        serverPaging: true,
+        serverFiltering: true,
+        serverSorting: true
+    });
+
+
+    $("#user-grid").kendoGrid({
+        dataSource: userDataSource,
         height: 550,
+        pageable:  {
+            refresh: true,
+            pageSizes: 10
+        },
         filterable: true,
         sortable: true,
-        pageable: true,
+
+        toolbar: ["create"],
         editable: {
             mode: "popup"
         },
@@ -87,16 +105,8 @@ $(function() {
                 { name: "destroy", text: "" },
                 {
                     name: "details",
-                    text:"View",
-                    click: function(e) {
-                        // e.target is the DOM element representing the button
-                        var tr = $(e.target).closest("tr"); // get the current table row (tr)
-                        // get the data bound to the current table row
-                        var data = this.dataItem(tr);
-                        console.log("Details for: " + data.name);
-                    }
-                },
-
+                    text:"View"
+                }
             ]
             }
 

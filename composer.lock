@@ -5,6 +5,7 @@
         "This file is @generated automatically"
     ],
     "hash": "b59ebc17132ad3b61ebf897282c73fd3",
+    "content-hash": "cc8dc4c0aa0c83b1f4e2159d8cdc4f30",
     "packages": [
         {
             "name": "aura/installer-default",
@@ -877,19 +878,13 @@
             "time": "2015-03-01 08:05:19"
         }
     ],
-    "aliases": [
-
-    ],
+    "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [
-
-    ],
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": ">=5.4.16"
     },
-    "platform-dev": [
-
-    ]
+    "platform-dev": []
 }
