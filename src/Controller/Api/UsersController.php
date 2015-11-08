@@ -55,7 +55,7 @@ class UsersController extends ApiController
      */
     public function add()
     {
-       parent::add();
+      parent::add();
     }
 
     /**

@@ -14,6 +14,8 @@ class ApiController extends AppController
     public $tableName;
     public $responseObjName;
     public $responseData;
+    public $message;
+    public $error;
 
     public function initialize()
     {
@@ -40,15 +42,18 @@ class ApiController extends AppController
     public function index()
     {
 
+        $this->paginate = array(
+            'limit'=>$_GET['limit'],
+            'page'=>$_GET['page']
+        );
 
+        $data = $this->responseData['children'] = $this->paginate();
         $this->responseData['paging']= array('Users'=>array(
-            'page'=>1,
+            'page'=>$_GET['page'],
             'current'=>1,
-            'count'=>2,
-            'limit'=>10,
+            'count'=>$this->{$this->modelClass}->find()->count(),
+            'limit'=>$_GET['limit'],
         ));
-        $this->responseData['children'] = $this->paginate();
-
     }
 
     /**
@@ -75,17 +80,26 @@ class ApiController extends AppController
      */
     public function add()
     {
-        $recipe = $this->Users->newEntity($this->request->data);
-        if ($this->Users->save($recipe)) {
-            $message = 'Saved';
+
+        if(isset($this->request->data['action']) && $this->request->data['action'] == "create" && isset($this->request->data['models'])) {
+            $kendoData = json_decode($this->request->data['models'],true);
         } else {
-            $message = 'Error';
+            throw new NotFoundException(__('Invalid create request'));
         }
-        $this->set([
-            'message' => $message,
-            'recipe' => $recipe,
-            '_serialize' => ['message', 'recipe']
-        ]);
+
+        $tableobj = $this->{$this->tableName}->newEntity();
+
+        if ($this->request->is('post')) {
+            $tableobj = $this->{$this->tableName}->patchEntity($tableobj, $kendoData);
+            if ($this->{$this->tableName}->save($tableobj)) {
+                $this->message = 'saved record';
+            } else {
+               pr($this->Users->error);exit;
+               $this->message = 'could not saved record';
+               $this->error = $this->{$this->tableName}->error;
+            }
+        }
+
     }
 
     /**
@@ -97,19 +111,17 @@ class ApiController extends AppController
      */
     public function edit($id = null)
     {
-        $recipe = $this->Users->get($id);
+        $data = $this->request->input('json_decode', true); pr($data);exit;
+        $recipe = $this->{$this->tableName}->get($id);
         if ($this->request->is(['post', 'put'])) {
-            $recipe = $this->Users->patchEntity($recipe, $this->request->data);
-            if ($this->Users->save($recipe)) {
-                $message = 'Saved';
+            $recipe = $this->{$this->tableName}->patchEntity($recipe, $this->request->data);
+            if ($this->{$this->tableName}->save($recipe)) {
+                $this->message = 'Saved';
             } else {
-                $message = 'Error';
+                $this->message = 'Error';
             }
         }
-        $this->set([
-            'message' => $message,
-            '_serialize' => ['message']
-        ]);
+        echo $this->message;exit;
     }
 
     /**
@@ -137,7 +149,8 @@ class ApiController extends AppController
         parent::beforeRender($event);
             $this->set([
             $this->responseObjName => $this->responseData,
-            '_serialize' => [$this->responseObjName]
+            'message' =>$this->message,
+            '_serialize' => [$this->responseObjName,'message']
         ]);
     }
 }

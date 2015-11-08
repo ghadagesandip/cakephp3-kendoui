@@ -87,6 +87,8 @@ Router::scope('/', function ($routes) {
 Plugin::routes();
 
 Router::prefix('Admin', function ($routes) {
+    $routes->connect('/', ['controller' => 'Users', 'action' => 'login']);
+    $routes->connect('/login', ['controller' => 'Users', 'action' => 'login']);
     $routes->fallbacks('InflectedRoute');
 });
 

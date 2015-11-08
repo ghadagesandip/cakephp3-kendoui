@@ -40,6 +40,7 @@ class AppController extends Controller
         parent::initialize();
         $this->loadComponent('Flash');
         $this->loadComponent('Paginator');
+        $this->loadComponent('RequestHandler');
         $this->loadComponent('Auth', [
             'authenticate' => [
                 'Form' => [

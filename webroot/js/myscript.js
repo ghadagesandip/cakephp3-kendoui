@@ -27,27 +27,67 @@ $(function() {
         });
 
     var userDataSource = new kendo.data.DataSource({
+        requestEnd: function(e) {
+            var response = e.response;
+            var type = e.type;
+            console.log(response);
+            if(type == "create" || type == "update") {
+                if(response.success == false) {
+
+                } else {
+                    if(response.message == true) {
+                        $("#messages").html("<h3 class=\"text-success\">"+response.message+"</h3>");
+                    } else {
+                        $("#messages").html("<h3 class=\"text-danger\">"+response.message+"</h3>");
+                    }
+                }
+                $("#user-grid").data("kendoGrid").dataSource.read();
+            }
+        },
         transport:{
             read :{
-                url : "\/cakephp3-kendoui/api/users.json",
+                url : "\/api/users.json",
+                type: "get",
                 dataType: "json",
-                type: "GET"
+                data: {
+                }
             },
             create: {
-                url:  "\/cakephp3-kendoui/api/users.json",
-                type: "POST"
+                url:  "\/api/users.json",
+                type: "post",
+                dataType: "json",
+                data: {
+                }
             },
             update: {
                 url: function(data){
-                    return "\/cakephp3-kendoui/api/users/"+data.id+".json"
+                    return "\/api/users/"+data.id+".json"
                 },
-                type: "PUT"
+                type: "put",
+                dataType: "json",
+                data: {
+                }
             },
             destroy: {
                 url: function(data){
-                    return "\/cakephp3-kendoui/api/users/"+data.id+".json"
+                    return "\/api/users/"+data.id+".json"
                 },
                 type: "DELETE"
+            },
+            parameterMap: function(data, operation) {
+                if (operation == "read") {
+                    return {
+                        take: data.take,
+                        page: data.page,
+                        skip: data.skip,
+                        limit: data.pageSize,
+                        cOrder: data.sort,
+                        cFilter: data.filter
+                    }
+                }
+                if (operation !== "read" && data.models) {
+                    return {action: operation, models: kendo.stringify(data.models)};
+                }
             }
         },
         schema: {
@@ -58,11 +98,15 @@ $(function() {
                     first_name: { type: "string" },
                     last_name: { type: "string" },
                     gender: { type: "string" },
-                    email: { type: "string" }
+                    email: { type: "string" },
+                    password: { type: "string" },
+                    confirm_password: { type: "string" }
                 }
             },
             data : function(response){
-                return response.Users.children;
+                if(response.Users.children != null){
+                    return response.Users.children;
+                }
             },
             error: function(e) {
                 console.log(e.errors); // displays "Invalid query"
@@ -73,23 +117,23 @@ $(function() {
         },
         batch: true,
         page:1,
-        pageSize: 1,
+        pageSize: 3,
         serverPaging: true,
         serverFiltering: true,
         serverSorting: true
     });
 
-
     $("#user-grid").kendoGrid({
+
         dataSource: userDataSource,
         height: 550,
         pageable:  {
             refresh: true,
-            pageSizes: 10
+            pageSizes: [5,10,20,50,100],
+            buttonCount: 10
         },
         filterable: true,
         sortable: true,
-
         toolbar: ["create"],
         editable: {
             mode: "popup"
@@ -100,17 +144,18 @@ $(function() {
             {field: "last_name",  title: "Last Name"},
             {field: "gender", title: "Gender"},
             {field: "email", title: "Email"},
-            { command: [
-                { name: "edit", text: { edit: "", cancel: "Cancel", update: "Update" } },
-                { name: "destroy", text: "" },
-                {
-                    name: "details",
-                    text:"View"
-                }
-            ]
+            {field: "password", title: "Password"},
+            {field: "confirm_password", title: "Confirm Password"},
+            {command: [
+                    { name: "edit", text: { edit: "", cancel: "Cancel", update: "Update" } },
+                    { name: "destroy", text: "" },
+                    {
+                        name: "details",
+                        text:"View"
+                    }
+                ]
             }
 
         ]
     });
-
 });
