@@ -73,10 +73,9 @@ class ApiController extends AppController
         ]);
     }
 
+
     /**
-     * Add method
-     *
-     * @return void Redirects on successful add, renders view otherwise.
+     * @throws NotFoundException
      */
     public function add()
     {
@@ -86,15 +85,13 @@ class ApiController extends AppController
         } else {
             throw new NotFoundException(__('Invalid create request'));
         }
-
         $tableobj = $this->{$this->tableName}->newEntity();
 
         if ($this->request->is('post')) {
-            $tableobj = $this->{$this->tableName}->patchEntity($tableobj, $kendoData);
+            $tableobj = $this->{$this->tableName}->patchEntity($tableobj, $kendoData[0]);
             if ($this->{$this->tableName}->save($tableobj)) {
                 $this->message = 'saved record';
             } else {
-               pr($this->Users->error);exit;
                $this->message = 'could not saved record';
                $this->error = $this->{$this->tableName}->error;
             }
@@ -111,17 +108,16 @@ class ApiController extends AppController
      */
     public function edit($id = null)
     {
-        $data = $this->request->input('json_decode', true); pr($data);exit;
+        $data = json_decode($this->request->data['models'],true);
         $recipe = $this->{$this->tableName}->get($id);
         if ($this->request->is(['post', 'put'])) {
-            $recipe = $this->{$this->tableName}->patchEntity($recipe, $this->request->data);
+            $recipe = $this->{$this->tableName}->patchEntity($recipe, $data[0]);
             if ($this->{$this->tableName}->save($recipe)) {
                 $this->message = 'Saved';
             } else {
                 $this->message = 'Error';
             }
         }
-        echo $this->message;exit;
     }
 
     /**

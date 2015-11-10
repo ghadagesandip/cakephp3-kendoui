@@ -61,16 +61,16 @@ $(function() {
             },
             update: {
                 url: function(data){
-                    return "\/api/users/"+data.id+".json"
+                    return "\/api/users/"+data.models[0].id+".json"
                 },
-                type: "put",
+                type: "PUT",
                 dataType: "json",
                 data: {
                 }
             },
             destroy: {
                 url: function(data){
-                    return "\/api/users/"+data.id+".json"
+                    return "\/api/users/"+data.models[0].id+".json"
                 },
                 type: "DELETE"
             },
@@ -104,9 +104,7 @@ $(function() {
                 }
             },
             data : function(response){
-                if(response.Users.children != null){
-                    return response.Users.children;
-                }
+                return response.Users.children;
             },
             error: function(e) {
                 console.log(e.errors); // displays "Invalid query"
