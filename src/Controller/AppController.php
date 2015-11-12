@@ -47,7 +47,7 @@ class AppController extends Controller
                     'fields' => ['username' => 'email', 'password' => 'password']
                 ],
             ],
-            'loginRedirect'=>['controller'=>'dashboards','action'=>'index']
+            'loginRedirect'=>['controller'=>'users','action'=>'index']
         ]);
 
         $this->loadComponent('Cookie', ['expiry' => '1 day']);

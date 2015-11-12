@@ -1,6 +1,7 @@
 $(function() {
     $(".btn").kendoButton();
 
+
         $("#toolbar").kendoToolBar({
             items: [
                 { type: "button", text: "Cakephp3-Kendoui" },
@@ -9,7 +10,7 @@ $(function() {
                 { type: "separator" },
                 { type: "button", text: "Tags", togglable: true,  attributes:{"href":"tags"}},
                 { type: "separator" },
-                { type: "button", text: "Bookmarks", togglable: true,  attributes:{"href":"bookmarks"}},
+                { type: "button", text: "Bookmarks", togglable: true,  attributes:{"href":"bookmarks"}}
             ]
         });
 
@@ -22,15 +23,41 @@ $(function() {
                 { text: "Heading 2", value: 2 },
                 { text: "Heading 3", value: 3 },
                 { text: "Title", value: 4 },
-                { text: "Subtitle", value: 5 },
+                { text: "Subtitle", value: 5 }
             ]
         });
+
+    var ds_MaleFemale = new kendo.data.DataSource({
+        transport: {
+            read: {
+                url: "/api/users.json",
+                type: "get",
+                dataType: "json",
+                async: false,
+                data: {
+                    type: "dropdownList"
+                }
+            }
+        }
+    })
+    ds_MaleFemale.read();
+    function ed_MaleFemale(container, options) {
+        $('<input name="' + options.field + '"/>').appendTo(container).kendoDropDownList({
+            autoBind: false,
+            optionLabel: {
+                text:"Please choose",
+                value:"0"
+            },
+            dataSource: ds_MaleFemale,
+            dataTextField: "text",
+            dataValueField: "value"
+        });
+    }
 
     var userDataSource = new kendo.data.DataSource({
         requestEnd: function(e) {
             var response = e.response;
             var type = e.type;
-            console.log(response);
             if(type == "create" || type == "update") {
                 if(response.success == false) {
 
@@ -121,6 +148,7 @@ $(function() {
         serverSorting: true
     });
 
+
     $("#user-grid").kendoGrid({
 
         dataSource: userDataSource,
@@ -140,20 +168,18 @@ $(function() {
             {field:"id", title:"ID"},
             {field: "first_name",  title: "First Name"},
             {field: "last_name",  title: "Last Name"},
-            {field: "gender", title: "Gender"},
+            {field: "gender", title: "Gender","values": ds_MaleFemale.data().toJSON(),"editor":ed_MaleFemale },
             {field: "email", title: "Email"},
             {field: "password", title: "Password"},
             {field: "confirm_password", title: "Confirm Password"},
             {command: [
                     { name: "edit", text: { edit: "", cancel: "Cancel", update: "Update" } },
                     { name: "destroy", text: "" },
-                    {
-                        name: "details",
-                        text:"View"
-                    }
                 ]
             }
 
         ]
     });
+
+
 });

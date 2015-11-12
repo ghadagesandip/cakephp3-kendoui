@@ -16,6 +16,7 @@ class ApiController extends AppController
     public $responseData;
     public $message;
     public $error;
+    public $success = true;
 
     public function initialize()
     {
@@ -47,7 +48,7 @@ class ApiController extends AppController
             'page'=>$_GET['page']
         );
 
-        $data = $this->responseData['children'] = $this->paginate();
+        $this->responseData['children'] = $this->paginate();
         $this->responseData['paging']= array('Users'=>array(
             'page'=>$_GET['page'],
             'current'=>1,
@@ -92,6 +93,7 @@ class ApiController extends AppController
             if ($this->{$this->tableName}->save($tableobj)) {
                 $this->message = 'saved record';
             } else {
+               $this->success = false;
                $this->message = 'could not saved record';
                $this->error = $this->{$this->tableName}->error;
             }
@@ -113,8 +115,9 @@ class ApiController extends AppController
         if ($this->request->is(['post', 'put'])) {
             $recipe = $this->{$this->tableName}->patchEntity($recipe, $data[0]);
             if ($this->{$this->tableName}->save($recipe)) {
-                $this->message = 'Saved';
+                $this->message = $this->tableName. ' details Saved';
             } else {
+                $this->success = false;
                 $this->message = 'Error';
             }
         }
@@ -129,15 +132,12 @@ class ApiController extends AppController
      */
     public function delete($id = null)
     {
-        $recipe = $this->Users->get($id);
-        $message = 'Deleted';
-        if (!$this->Users->delete($recipe)) {
-            $message = 'Error';
+        $recipe = $this->{$this->tableName}->get($id);
+        $this->message = 'Deleted';
+        if (!$this->{$this->tableName}->delete($recipe)) {
+            $this->success = false;
+            $this->message = 'Error';
         }
-        $this->set([
-            'message' => $message,
-            '_serialize' => ['message']
-        ]);
     }
 
 
@@ -146,7 +146,8 @@ class ApiController extends AppController
             $this->set([
             $this->responseObjName => $this->responseData,
             'message' =>$this->message,
-            '_serialize' => [$this->responseObjName,'message']
+            '_serialize' => [$this->responseObjName,'message'],
+            'success'=>$this->success
         ]);
     }
 }
