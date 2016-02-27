@@ -1,7 +1,6 @@
 <?php
 namespace App\Controller\Admin;
 
-use App\Controller\AppController;
 use Cake\Event\Event;
 use Cake\Cache\Cache;
 /**
@@ -9,8 +8,7 @@ use Cake\Cache\Cache;
  *
  * @property \App\Model\Table\UsersTable $Users
  */
-class UsersController extends AppController
-{
+class UsersController extends AdminController{
 
     public function beforeFilter(Event $event){
         parent::beforeFilter($event);
@@ -18,8 +16,7 @@ class UsersController extends AppController
     }
 
 
-    public function login()
-    {
+    public function login(){
 
         if ($this->request->is('post')) {
             //echo '<pre>'; print_r($this->request->data);exit;
@@ -53,17 +50,7 @@ class UsersController extends AppController
     }
 
 
-    /**
-     * Index method
-     *
-     * @return void
-     */
-    public function index()
-    {
-        $users = $this->paginate($this->Users);
-        $this->set('users', $users);
-        $this->set('_serialize', ['users']);
-    }
+
 
     /**
      * View method
@@ -82,9 +69,6 @@ class UsersController extends AppController
             ]);
             Cache::write('user'.$id, $user);
         }
-//        $user = $this->Users->get($id, [
-//            'contain' => ['Bookmarks']
-//        ]);
 
         $this->set('user', Cache::read('user'.$id));
         $this->set('_serialize', ['user']);
@@ -154,4 +138,10 @@ class UsersController extends AppController
         }
         return $this->redirect(['action' => 'index']);
     }
+
+
+    public function test(){
+
+    }
+
 }

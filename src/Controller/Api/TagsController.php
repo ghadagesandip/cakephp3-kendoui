@@ -1,7 +1,6 @@
 <?php
 namespace App\Controller\Api;
 
-use App\Controller\Api\ApiController;
 use Cake\Event\Event;
 use Cake\Cache\Cache;
 /**

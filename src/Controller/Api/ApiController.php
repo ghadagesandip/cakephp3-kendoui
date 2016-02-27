@@ -7,7 +7,6 @@ use Cake\Cache\Cache;
 use Cake\View\Helper\PaginatorHelper;
 
 
-
 class ApiController extends AppController
 {
 
@@ -45,11 +44,12 @@ class ApiController extends AppController
 
         $this->paginate = array(
             'limit'=>$_GET['limit'],
-            'page'=>$_GET['page']
+            'page'=>$_GET['page'],
+            'order'=> []
         );
 
         $this->responseData['children'] = $this->paginate();
-        $this->responseData['paging']= array('Users'=>array(
+        $this->responseData['paging']= array($this->name=>array(
             'page'=>$_GET['page'],
             'current'=>1,
             'count'=>$this->{$this->modelClass}->find()->count(),

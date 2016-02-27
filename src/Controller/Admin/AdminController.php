@@ -12,9 +12,11 @@
  * @since     0.2.9
  * @license   http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace App\Controller;
-use Cake\Controller\Controller;
+namespace App\Controller\Admin;
+
+use App\Controller\AppController;
 use Cake\Event\Event;
+
 
 /**
  * Application Controller
@@ -24,8 +26,7 @@ use Cake\Event\Event;
  *
  * @link http://book.cakephp.org/3.0/en/controllers.html#the-app-controller
  */
-class AppController extends Controller
-{
+class AdminController extends AppController{
 
     /**
      * Initialization hook method.
@@ -68,6 +69,20 @@ class AppController extends Controller
         }else{
             $this->viewBuilder()->layout('default');
         }
+    }
+
+    /**
+     * index function
+     *
+     * this is generic function for admin index
+     *
+     */
+    public function index(){
+
+        if (!file_exists(APP . 'Template' .DS.'Admin'. DS . $this->request->params['controller'] . DS. 'index.ctp')) {
+            $this->render('/Admin/Generic/index');
+        }
+
     }
 
 }

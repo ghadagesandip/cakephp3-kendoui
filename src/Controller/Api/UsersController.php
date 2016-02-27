@@ -1,7 +1,6 @@
 <?php
 namespace App\Controller\Api;
 
-use App\Controller\Api\ApiController;
 use Cake\Event\Event;
 use Cake\Cache\Cache;
 /**
@@ -31,9 +30,6 @@ class UsersController extends ApiController
      */
     public function index()
     {
-        if(isset($_GET['type']) && $_GET['type']=='dropdownList'){
-            echo json_encode(array(array('value'=>1,'text'=>'Male'),array('value'=>0,'text'=>'FeMale')));exit;
-        }
         parent::index();
     }
 

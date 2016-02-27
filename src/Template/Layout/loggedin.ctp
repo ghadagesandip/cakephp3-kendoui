@@ -38,6 +38,12 @@
 <?= $this->Html->script('kendo.all.min') ?>
 <?= $this->Html->script('../bower_components/bootstrap/dist/js/bootstrap.min') ?>
 <?= $this->Html->script('myscript') ?>
-<?= $this->fetch('script') ?>
+
+<?php
+if(file_exists(WWW_ROOT.'js'.DS.'pageJs'.DS.'admin'.DS.$this->request->controller.'.js')){
+    echo $this->Html->script('pageJs'.DS.'admin'.DS.$this->request->controller.'.js');
+}
+?>
+<?= $this->fetch('scriptBottom') ?>
 </body>
 </html>
