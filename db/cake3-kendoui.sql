@@ -118,9 +118,9 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `first_name`, `last_name`, `gender`, `email`, `password`, `created`, `updated`, `active`) VALUES
-(2, 'Pushpa', 'Ghadge', 0, 'pushpa@gmail.com', '$2y$10$C9awlIKRuTruGr0gAX9/peekJIRdAK75OGsCZZNqKBDhD2ZFyA1sq', '2015-06-27 08:01:42', NULL, 1),
-(3, 'SandipS', 'GhadgeS', 1, 'ghadagesandip@gmail.com', '$2y$10$Wt67VSfTM9K7RUJnfFnJB.ay7qGzSxOghtr4P/XQKJ8c4ocjcfncq', '2015-11-08 11:20:29', NULL, 1),
-(4, 'Sandipa', 'Ghadgea', 1, 'ghadagepushpa@gmail.com', '$2y$10$v70r1gWL1FwP0fIpRMkGDuA8umdBzVWhlaNYx8f/2r42FHiMve9J6', '2015-11-08 11:43:58', NULL, 1);
+(2, 'sandy', 'Ghadge', 0, 'sandy@gmail.com', '$2y$10$C9awlIKRuTruGr0gAX9/peekJIRdAK75OGsCZZNqKBDhD2ZFyA1sq', '2015-06-27 08:01:42', NULL, 1),
+(3, 'Sandip', 'GhadgeS', 1, 'sandip@gmail.com', '$2y$10$Eepd6OZJ7ZGPvsYPn25GRO4Fcg06mi22HM5Oyke9EwaGhroeLaCpS', '2015-11-08 11:20:29', NULL, 1),
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

@@ -49,7 +49,7 @@ composer update
             'timezone' => 'UTC',
             'cacheMetadata' => true,
 ```
-6. Go to http://localhost/cakephp3-kendoui/admin/users/login
+6. create a virtual host(eg dev.cakekendo.com) and Go to http://dev.cakekendo.com/admin/users
 7. use following credentials for login
  > username : sandip@gmail.com
  > password : sandip

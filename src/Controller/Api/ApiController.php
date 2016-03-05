@@ -3,8 +3,7 @@ namespace App\Controller\Api;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
-use Cake\Cache\Cache;
-use Cake\View\Helper\PaginatorHelper;
+
 
 
 class ApiController extends AppController
@@ -24,9 +23,8 @@ class ApiController extends AppController
     }
 
     public function beforeFilter(Event $event){
-
+        $this->Auth->allow(['index']);
         parent::beforeFilter($event);
-        $this->Auth->allow(['index','add','edit','delete']);
         $this->responseObjName = $this->tableName = $this->request->params['controller'];
     }
 
@@ -39,8 +37,7 @@ class ApiController extends AppController
      *
      * @return void
      */
-    public function index()
-    {
+    public function index(){
 
         $this->paginate = array(
             'limit'=>$_GET['limit'],
@@ -57,29 +54,12 @@ class ApiController extends AppController
         ));
     }
 
-    /**
-     * View method
-     *
-     * @param string|null $id User id.
-     * @return void
-     * @throws \Cake\Network\Exception\NotFoundException When record not found.
-     */
-    public function view($id = null)
-    {
-
-        $recipe = $this->Users->get($id);
-        $this->set([
-            'recipe' => $recipe,
-            '_serialize' => ['recipe']
-        ]);
-    }
 
 
     /**
      * @throws NotFoundException
      */
-    public function add()
-    {
+    public function add(){
 
         if(isset($this->request->data['action']) && $this->request->data['action'] == "create" && isset($this->request->data['models'])) {
             $kendoData = json_decode($this->request->data['models'],true);
@@ -108,8 +88,7 @@ class ApiController extends AppController
      * @return void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null){
         $data = json_decode($this->request->data['models'],true);
         $recipe = $this->{$this->tableName}->get($id);
         if ($this->request->is(['post', 'put'])) {
