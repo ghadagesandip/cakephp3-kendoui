@@ -103,7 +103,7 @@
         height: 550,
         pageable:  {
             refresh: true,
-            pageSizes: [5,10,20,50,100],
+            pageSizes: [5,10,20, 40, 60],
             buttonCount: 10,
             input: true
         },

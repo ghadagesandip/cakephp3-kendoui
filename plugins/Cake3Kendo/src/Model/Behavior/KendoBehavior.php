@@ -44,6 +44,9 @@ class KendoBehavior extends Behavior{
             if(isset($this->dataTypes[$schema->column($field)['type']])){
                 $kendoModelArr[$field]['type'] = $this->dataTypes[$schema->column($field)['type']];
             }
+            if($kendoModelArr[$field]=='id'){
+                $kendoModelArr[$field]['editable'] = false;
+            }
         }
 
         return array('id'=>$this->_table->primaryKey(),'fields'=>$kendoModelArr);
@@ -80,7 +83,10 @@ class KendoBehavior extends Behavior{
             $cols[$c]['title'] = Inflector::humanize($field);
             $c++;
         }
-        //pr($cols);exit;
+
+        if(isset($tableObj->kendoCommands) && !empty($tableObj->kendoCommands)){
+            $cols[$c]['command'] = $tableObj->kendoCommands;
+        }
         return $cols;
 
     }
