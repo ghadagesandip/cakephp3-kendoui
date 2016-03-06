@@ -15,7 +15,7 @@ class AdminTable extends Table{
 
         $this->kendoPrefix = "admin";
         //show only this fields
-        $this->kendoGridDontShow = array();
+        $this->kendoGridDontShow = array('created','updated');
 
         //hide this fields
         $this->kendoGridHide = array();
@@ -23,6 +23,8 @@ class AdminTable extends Table{
         $this->kendoIgnoreAssoc = array();
         $this->kendoCustomColumns = array();
         $this->kendoCustomSchema = array();
+        $this->kendoCustomColumns = array();
+        $this->kendoOverrideColumns = array();
     }
 
 }

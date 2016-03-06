@@ -124,7 +124,7 @@
             {field: "last_name",  title: "Last Name"},
             {field: "gender", title: "Gender",values: ds_MaleFemale,editor:ed_MaleFemale },
             {field: "email", title: "Email"},
-            {field: "password", title: "Password"},
+            {field: "password", title: "Password",hidden:true},
             {field: "confirm_password", title: "Confirm Password"},
             {command: [
                 { name: "edit", text: { edit: "", cancel: "Cancel", update: "Update" } },

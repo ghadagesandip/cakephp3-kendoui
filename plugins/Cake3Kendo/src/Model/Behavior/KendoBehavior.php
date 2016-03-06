@@ -59,13 +59,28 @@ class KendoBehavior extends Behavior{
 
         $cols = array();
         $c = 0;
+
         foreach($schema->columns() as $idx=>$field){
+
+            if(isset($tableObj->kendoOverrideColumns[$field])){
+                $cols[$c] = $tableObj->kendoOverrideColumns[$field];
+                continue;
+            }
+
+            if(in_array($field,$tableObj->kendoGridHide)){
+                $cols[$c]['hidden'] = true;
+            }
+
+            if(in_array($field,$tableObj->kendoGridDontShow)){
+              continue;
+            }
 
             $cols[$c]['lockable'] = false;
             $cols[$c]['field'] =  $field;
             $cols[$c]['title'] = Inflector::humanize($field);
             $c++;
         }
+        //pr($cols);exit;
         return $cols;
 
     }
