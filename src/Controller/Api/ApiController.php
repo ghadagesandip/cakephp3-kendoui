@@ -4,6 +4,7 @@ namespace App\Controller\Api;
 use App\Controller\AppController;
 use Cake\Event\Event;
 use Cake\Cache\Cache;
+use Cake\Utility\Inflector;
 use Cake\View\Helper\PaginatorHelper;
 
 
@@ -27,7 +28,8 @@ class ApiController extends AppController
 
         parent::beforeFilter($event);
 
-        $this->responseObjName = $this->tableName = $this->request->params['controller'];
+        $this->tableName = $this->request->params['controller'];
+        $this->responseObjName = Inflector::underscore($this->request->params['controller']);
     }
 
     public $paginate = [
@@ -49,7 +51,7 @@ class ApiController extends AppController
         );
 
         $this->responseData['children'] = $this->paginate();
-        $this->responseData['paging']= array($this->name=>array(
+        $this->responseData['paging']= array($this->responseObjName=>array(
             'page'=>$_GET['page'],
             'current'=>1,
             'count'=>$this->{$this->modelClass}->find()->count(),

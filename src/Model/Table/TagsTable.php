@@ -10,8 +10,7 @@ use Cake\Validation\Validator;
 /**
  * Tags Model
  */
-class TagsTable extends Table
-{
+class TagsTable extends AdminTable{
 
     /**
      * Initialize method
@@ -21,10 +20,10 @@ class TagsTable extends Table
      */
     public function initialize(array $config)
     {
+        parent::initialize($config);
         $this->table('tags');
         $this->displayField('title');
         $this->primaryKey('id');
-        $this->addBehavior('Timestamp');
         $this->belongsToMany('Bookmarks', [
             'foreignKey' => 'tag_id',
             'targetForeignKey' => 'bookmark_id',

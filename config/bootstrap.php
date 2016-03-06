@@ -193,4 +193,4 @@ if (Configure::read('debug')) {
 DispatcherFactory::add('Asset');
 DispatcherFactory::add('Routing');
 DispatcherFactory::add('ControllerFactory');
-
+Plugin::load('Cake3Kendo', ['bootstrap' => false, 'routes' => true]);

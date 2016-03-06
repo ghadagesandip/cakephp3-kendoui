@@ -1,4 +1,3 @@
-<?php $cName =  $this->request->controller; ?>
 <div class="row">
     <div class="col-lg-12">
         <div class="row">
@@ -30,14 +29,14 @@
         },
         transport:{
             read :{
-                url : "\/api/admin/<?= \Cake\Utility\Inflector::underscore($cName);?>.json",
+                url : "\/api/admin/<?= $cName;?>.json",
                 type: "get",
                 dataType: "json",
                 data: {
                 }
             },
             create: {
-                url:  "\/api/admin/<?= \Cake\Utility\Inflector::underscore($cName);?>.json",
+                url:  "\/api/admin/<?= $cName;?>.json",
                 type: "post",
                 dataType: "json",
                 data: {
@@ -45,7 +44,7 @@
             },
             update: {
                 url: function(data){
-                    return "\/api/admin/<?= \Cake\Utility\Inflector::underscore($cName);?>/"+data.models[0].id+".json"
+                    return "\/api/admin/<?= $cName;?>/"+data.models[0].id+".json"
                 },
                 type: "PUT",
                 dataType: "json",
@@ -54,7 +53,7 @@
             },
             destroy: {
                 url: function(data){
-                    return "\/api/admin/<?= \Cake\Utility\Inflector::underscore($cName);?>/"+data.models[0].id+".json"
+                    return "\/api/admin/<?= $cName;?>/"+data.models[0].id+".json"
                 },
                 type: "DELETE"
             },
@@ -75,14 +74,7 @@
             }
         },
         schema: {
-            model: {
-                id: "id",
-                fields: {
-                    id: { type: "number", editable:false },
-                    title: { type: "string" },
-
-                }
-            },
+            model:<?= $kendoModelArray ?>,
             data : function(response){
                 if(response.<?= $cName;?> != null){
                     return response.<?= $cName;?>.children;
@@ -104,9 +96,10 @@
     });
 
 
+
     $("#<?= $cName;?>-grid").kendoGrid({
 
-        dataSource: <?= $cName;?>DataSource,
+        dataSource:<?= $cName;?>DataSource,
         height: 550,
         pageable:  {
             refresh: true,
@@ -124,16 +117,7 @@
             confirmation: true,
             confirmDelete: "Yes"
         },
-        columns: [
-            {field:"id", title:"ID"},
-            {field: "title",  title: "title"},
-            {command: [
-                { name: "edit", text: { edit: "", cancel: "Cancel", update: "Update" } },
-                { name: "destroy", text: "" }
-            ]
-            }
-
-        ]
+        columns: <?php echo $kendoGridCols;?>
     });
 
 <?php $this->Html->scriptEnd(); ?>

@@ -16,6 +16,8 @@ namespace App\Controller\Admin;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
+use Cake\ORM\TableRegistry;
+use Cake\Utility\Inflector;
 
 
 /**
@@ -78,11 +80,16 @@ class AdminController extends AppController{
      *
      */
     public function index(){
+        $cName = Inflector::underscore($this->request->controller);
+        $kendoModelArray = json_encode($this->{$this->name}->makeKendoModel());
+        $kendoGridCols = $this->{$this->name}->makeKendoGridCols();
+
+        $kendoGridCols = json_encode($kendoGridCols);
+        $this->set(compact('kendoModelArray','cName','kendoGridCols'));
 
         if (!file_exists(APP . 'Template' .DS.'Admin'. DS . $this->request->params['controller'] . DS. 'index.ctp')) {
             $this->render('/Admin/Generic/index');
         }
-
     }
 
 }

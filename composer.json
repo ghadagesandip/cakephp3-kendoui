@@ -22,13 +22,15 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "src"
+            "App\\": "src",
+            "Cake3Kendo\\": "./plugins/Cake3Kendo/src"
         }
     },
     "autoload-dev": {
         "psr-4": {
             "App\\Test\\": "tests",
-            "Cake\\Test\\": "./vendor/cakephp/cakephp/tests"
+            "Cake\\Test\\": "./vendor/cakephp/cakephp/tests",
+            "Cake3Kendo\\Test\\": "./plugins/Cake3Kendo/tests"
         }
     },
     "scripts": {
