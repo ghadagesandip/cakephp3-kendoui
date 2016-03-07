@@ -4,8 +4,8 @@ namespace App\Controller\Api;
 use App\Controller\AppController;
 use Cake\Event\Event;
 use Cake\Cache\Cache;
+use Cake\Utility\Inflector;
 use Cake\View\Helper\PaginatorHelper;
-
 
 
 class ApiController extends AppController
@@ -22,13 +22,15 @@ class ApiController extends AppController
     {
         parent::initialize();
         $this->loadComponent('RequestHandler');
+
     }
 
     public function beforeFilter(Event $event){
 
         parent::beforeFilter($event);
-        $this->Auth->allow(['index','add','edit','delete']);
-        $this->responseObjName = $this->tableName = $this->request->params['controller'];
+
+        $this->tableName = $this->request->params['controller'];
+        $this->responseObjName = Inflector::underscore($this->request->params['controller']);
     }
 
     public $paginate = [
@@ -45,16 +47,23 @@ class ApiController extends AppController
 
         $this->paginate = array(
             'limit'=>$_GET['limit'],
-            'page'=>$_GET['page']
+            'page'=>$_GET['page'],
+            'order'=>$this->{$this->tableName}->order
         );
 
+        //pr($this->request->query);exit;
+        if(isset($this->request->query['cOrder'][0]['field'])){
+
+            $this->paginate['order'] = array($this->request->query['cOrder'][0]['field'] => $this->request->query['cOrder'][0]['dir']);
+        }
         $this->responseData['children'] = $this->paginate();
-        $this->responseData['paging']= array('Users'=>array(
+        $this->responseData['paging']= array($this->responseObjName=>array(
             'page'=>$_GET['page'],
             'current'=>1,
             'count'=>$this->{$this->modelClass}->find()->count(),
             'limit'=>$_GET['limit'],
         ));
+
     }
 
     /**
@@ -132,9 +141,9 @@ class ApiController extends AppController
      */
     public function delete($id = null)
     {
-        $recipe = $this->{$this->tableName}->get($id);
+        $record = $this->{$this->tableName}->get($id);
         $this->message = 'Deleted';
-        if (!$this->{$this->tableName}->delete($recipe)) {
+        if (!$this->{$this->tableName}->delete($record)) {
             $this->success = false;
             $this->message = 'Error';
         }

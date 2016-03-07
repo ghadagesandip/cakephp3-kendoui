@@ -94,7 +94,10 @@ Router::prefix('Admin', function ($routes) {
 });
 
 Router::prefix('Api', function ($routes) {
-    $routes->extensions(['json','xml']);
-    $routes->resources('Users');
-    $routes->resources('Tags');
+    $routes->prefix('Admin',function($routes){
+        $routes->extensions(['json','xml']);
+        $routes->resources('Users');
+        $routes->resources('Tags');
+        $routes->resources('Bookmarks');
+    });
 });

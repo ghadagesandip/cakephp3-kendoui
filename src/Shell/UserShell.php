@@ -8,8 +8,7 @@ class UserShell extends Shell{
 
     public function initialize(){
         parent::initialize();
-        $this->loadModel('Users');
-    }
+        $this->loadModel('Users');}
 
     public function main(){
         $this->out('Create user use \'user add\' command');

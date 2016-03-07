@@ -1,17 +1,14 @@
 <?php
 namespace App\Model\Table;
 
-use App\Model\Entity\User;
+
 use Cake\ORM\Query;
-use Cake\ORM\RulesChecker;
-use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
  * Users Model
  */
-class UsersTable extends Table
-{
+class UsersTable extends AdminTable{
 
     /**
      * Initialize method
@@ -20,11 +17,23 @@ class UsersTable extends Table
      * @return void
      */
     public function initialize(array $config)
-    {   
+    {
+        parent::initialize($config);
         $this->table('users');
         $this->displayField('id');
         $this->primaryKey('id');
-        $this->addBehavior('Timestamp');
+
+        $this->alias('Users');
+
+        $this->kendoGridDontShow = array('created','updated','password');
+        $this->kendoOverrideColumns = array(
+            'active'=>array(
+                'field'=>'active',
+                'title'=>'active',
+                'values'=>'ds_MaleFemale',
+                'editor'=>'ed_MaleFemale'
+            )
+        );
         $this->hasMany('Bookmarks', [
             'foreignKey' => 'user_id'
         ]);

@@ -10,7 +10,8 @@ $(function() {
                 { type: "separator" },
                 { type: "button", text: "Tags", togglable: true,  attributes:{"href":"tags"}},
                 { type: "separator" },
-                { type: "button", text: "Bookmarks", togglable: true,  attributes:{"href":"bookmarks"}}
+                { type: "button", text: "Bookmarks", togglable: true,  attributes:{"href":"bookmarks"}},
+                { type: "button", text: "Logout", togglable: true,  attributes:{"href":"logout"}}
             ]
         });
 

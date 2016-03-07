@@ -31,10 +31,9 @@ configuration relevant for your application.
 ```bash
 composer update
 ```
-3. Copy app.default.php file to app.php
-4. Create tmp and logs dir and set write permission to these dirs.
-5. create database import database from db/cake3-kendoui.sql dir.
-6. set databse connection in config/app.php file
+3. Create tmp and logs dir and set write permission to these dirs.
+4. create database and set database connection in config/app.php file as below
+
 ```php
 'Datasources' => [
         'default' => [
@@ -49,10 +48,25 @@ composer update
             'timezone' => 'UTC',
             'cacheMetadata' => true,
 ```
-6. Go to http://localhost/cakephp3-kendoui/admin/users/login
-7. use following credentials for login
- > username : sandip@gmail.com
- > password : sandip
+
+5. Run following command
+```bash
+bin/cake migrations migrate
+```
+
+6. Run following command to create admin user
+```bash
+bin/cake user add
+```
+
+7. Run following command to start application
+```bash
+bin/cake server
+```
+
+8. Go to admin login page
+http://localhost:8765/admin
+
 
 # Kendoui documentation important links
 1) grid api : http://docs.telerik.com/kendo-ui/api/javascript/ui/grid

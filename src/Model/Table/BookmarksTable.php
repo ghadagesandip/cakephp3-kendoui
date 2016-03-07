@@ -10,8 +10,7 @@ use Cake\Validation\Validator;
 /**
  * Bookmarks Model
  */
-class BookmarksTable extends Table
-{
+class BookmarksTable extends AdminTable{
 
     /**
      * Initialize method
@@ -21,10 +20,10 @@ class BookmarksTable extends Table
      */
     public function initialize(array $config)
     {
+        parent::initialize($config);
         $this->table('bookmarks');
         $this->displayField('title');
         $this->primaryKey('id');
-        $this->addBehavior('Timestamp');
         $this->belongsTo('Users', [
             'foreignKey' => 'user_id'
         ]);

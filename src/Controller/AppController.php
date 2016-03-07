@@ -13,7 +13,6 @@
  * @license   http://www.opensource.org/licenses/mit-license.php MIT License
  */
 namespace App\Controller;
-use Cake\Controller\Component\AuthComponent;
 use Cake\Controller\Controller;
 use Cake\Event\Event;
 
@@ -28,45 +27,5 @@ use Cake\Event\Event;
 class AppController extends Controller
 {
 
-    /**
-     * Initialization hook method.
-     *
-     * Use this method to add common initialization code like loading components.
-     *
-     * @return void
-     */
-    public function initialize()
-    {
-        parent::initialize();
-        $this->loadComponent('Flash');
-        $this->loadComponent('Paginator');
-        $this->loadComponent('RequestHandler');
-        $this->loadComponent('Auth', [
-            'authenticate' => [
-                'Form' => [
-                    'fields' => ['username' => 'email', 'password' => 'password']
-                ],
-            ],
-            'loginRedirect'=>['controller'=>'users','action'=>'index']
-        ]);
-
-        $this->loadComponent('Cookie', ['expiry' => '1 day']);
-        $this->loadComponent('Math');
-        $this->loadComponent('FileUpload',[
-                'uploadDir'=> WWW_ROOT.'img'.DS.'upload'.DS,
-                'thumbs'=>[
-                    'small'=>[10,10],'medium'=>[20,20],'large'=>[30,30]
-                ]
-            ]
-        );
-    }
-
-    public function beforeFilter(Event $event){
-        if($this->Auth->user('id')){
-            $this->viewBuilder()->layout('loggedin');
-        }else{
-            $this->viewBuilder()->layout('default');
-        }
-    }
 
 }
