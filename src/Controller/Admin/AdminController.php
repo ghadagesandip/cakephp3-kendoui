@@ -83,7 +83,7 @@ class AdminController extends AppController{
         $cName = Inflector::underscore($this->request->controller);
         $kendoModelArray = json_encode($this->{$this->name}->makeKendoModel());
         $kendoGridCols = $this->{$this->name}->makeKendoGridCols();
-
+        //pr($kendoGridCols);exit;
         $kendoGridCols = json_encode($kendoGridCols);
         $this->set(compact('kendoModelArray','cName','kendoGridCols'));
 

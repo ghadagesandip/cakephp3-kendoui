@@ -29,7 +29,9 @@ class AdminTable extends Table{
             array("name" => "edit"),
             array("name" => "destroy")
         );
-
+        $this->kendoNonEditable = array(
+            'id'
+        );
     }
 
 }

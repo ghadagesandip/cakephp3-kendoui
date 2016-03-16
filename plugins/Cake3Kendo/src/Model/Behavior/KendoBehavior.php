@@ -44,7 +44,7 @@ class KendoBehavior extends Behavior{
             if(isset($this->dataTypes[$schema->column($field)['type']])){
                 $kendoModelArr[$field]['type'] = $this->dataTypes[$schema->column($field)['type']];
             }
-            if($kendoModelArr[$field]=='id'){
+            if(in_array($field,$tableObj->kendoNonEditable)){
                 $kendoModelArr[$field]['editable'] = false;
             }
         }
