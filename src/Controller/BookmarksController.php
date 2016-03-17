@@ -8,8 +8,7 @@ use App\Controller\AppController;
  *
  * @property \App\Model\Table\BookmarksTable $Bookmarks
  */
-class BookmarksController extends AppController
-{
+class BookmarksController extends FrontendController{
 
 
      public function initialize()

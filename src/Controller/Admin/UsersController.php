@@ -15,7 +15,6 @@ class UsersController extends AdminController{
         $this->Auth->allow(['logout']);
     }
 
-
     public function login(){
 
         if ($this->request->is('post')) {

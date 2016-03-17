@@ -7,8 +7,7 @@ use Cake\Cache\Cache;
  *
  * @property \App\Model\Table\TagsTable $Tags
  */
-class TagsController extends AppController
-{
+class TagsController extends FrontendController{
 
     public function initialize(){
         parent::initialize();

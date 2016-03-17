@@ -15,6 +15,7 @@
 namespace App\Controller\Admin;
 
 use App\Controller\AppController;
+use Cake\Controller\Component\AuthComponent;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Inflector;
@@ -66,6 +67,7 @@ class AdminController extends AppController{
 
 
     public function beforeFilter(Event $event){
+        $this->Auth->key = 'cadmin';
         if($this->Auth->user('id')){
             $this->viewBuilder()->layout('loggedin');
         }else{

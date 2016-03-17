@@ -9,8 +9,7 @@ use Cake\Cache\Cache;
  *
  * @property \App\Model\Table\UsersTable $Users
  */
-class UsersController extends AppController
-{
+class UsersController extends FrontendController{
 
     public function beforeFilter(Event $event){
         parent::beforeFilter($event);

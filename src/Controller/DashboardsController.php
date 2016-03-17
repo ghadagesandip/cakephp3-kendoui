@@ -12,8 +12,7 @@ use Cake\Event\Event;
  * @property \App\Model\Table\UsersTable $Users
  */
 
-class DashboardsController extends AppController
-{
+class DashboardsController extends FrontendController{
 
     public function beforeFilter(Event $event){
         parent::beforeFilter($event);
