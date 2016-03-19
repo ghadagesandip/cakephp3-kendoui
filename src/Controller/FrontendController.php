@@ -56,6 +56,8 @@ class FrontendController extends AppController{
                 ]
             ]
         );
+
+        $this->Auth->__set('sessionKey', 'Auth.frontuser');
     }
 
 

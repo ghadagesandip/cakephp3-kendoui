@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller\Admin;
 
+use Cake\Controller\Component\AuthComponent;
 use Cake\Event\Event;
 use Cake\Cache\Cache;
 /**

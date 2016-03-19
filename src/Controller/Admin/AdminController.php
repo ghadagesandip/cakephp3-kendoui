@@ -62,12 +62,13 @@ class AdminController extends AppController{
                 ]
             ]
         );
+        $this->Auth->__set('sessionKey', 'Auth.kuser');
     }
 
 
 
     public function beforeFilter(Event $event){
-        $this->Auth->key = 'cadmin';
+
         if($this->Auth->user('id')){
             $this->viewBuilder()->layout('loggedin');
         }else{
@@ -84,6 +85,7 @@ class AdminController extends AppController{
     public function index(){
         $cName = Inflector::underscore($this->request->controller);
         $kendoModelArray = json_encode($this->{$this->name}->makeKendoModel());
+        //pr($kendoModelArray);exit;
         $kendoGridCols = $this->{$this->name}->makeKendoGridCols();
         //pr($kendoGridCols);exit;
         $kendoGridCols = json_encode($kendoGridCols);

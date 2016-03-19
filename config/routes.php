@@ -49,6 +49,7 @@ Router::scope('/', function ($routes) {
      * to use (in this case, src/Template/Pages/home.ctp)...
      */
     $routes->connect('/', ['controller' => 'Users', 'action' => 'login']);
+    $routes->connect('/logout', ['controller' => 'Users', 'action' => 'logout']);
 
     /**
      * ...and connect the rest of 'Pages' controller's URLs.
