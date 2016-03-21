@@ -108,9 +108,20 @@ class KendoBehavior extends Behavior{
             $c++;
         }
 
+        //add custom columns to column's list
+        if(isset($tableObj->kendoCustomColumns) && is_array($tableObj->kendoCustomColumns)) {
+            foreach($tableObj->kendoCustomColumns as $customColumn) {
+                $cols[$c] = $customColumn;
+                $c++;
+            }
+        }
+
         if(isset($tableObj->kendoCommands) && !empty($tableObj->kendoCommands)){
             $cols[$c]['command'] = $tableObj->kendoCommands;
         }
+
+
+
         return $cols;
 
     }

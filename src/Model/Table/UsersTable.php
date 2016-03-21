@@ -25,14 +25,23 @@ class UsersTable extends AdminTable{
 
         $this->alias('Users');
 
-        $this->kendoGridDontShow = array('created','updated','password');
+        $this->kendoGridDontShow = array('created','updated');
+
+        $this->kendoCustomColumns = array(
+            'confirm_password'=>array(
+                'field'=>'confirm_password',
+                'title'=>'confirm password',
+                'hidden'=>true,
+            )
+        );
+
         $this->kendoOverrideColumns = array(
             'active'=>array(
                 'field'=>'active',
                 'title'=>'active',
                 'values'=>'ds_MaleFemale',
                 'editor'=>'ed_MaleFemale'
-            )
+            ),
         );
         $this->hasMany('Bookmarks', [
             'foreignKey' => 'user_id'

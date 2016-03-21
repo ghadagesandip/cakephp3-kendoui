@@ -14,16 +14,16 @@ class AdminTable extends Table{
         $this->addBehavior('Cake3Kendo.Kendo');
 
         $this->kendoPrefix = "admin";
+
         //show only this fields
         $this->kendoGridDontShow = array('created','updated');
 
-        //hide this fields
-        $this->kendoGridHide = array();
+        //hide these fields from grid
+        $this->kendoGridHide = array('password');
         $this->order = array('id'=> 'desc');
         $this->kendoIgnoreAssoc = array();
         $this->kendoCustomColumns = array();
         $this->kendoCustomSchema = array();
-        $this->kendoCustomColumns = array();
         $this->kendoOverrideColumns = array();
         $this->kendoCommands = array(
             array("name" => "edit"),
