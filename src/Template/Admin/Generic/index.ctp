@@ -73,6 +73,9 @@
                 }
             }
         },
+        error: function (e) {
+
+        },
         schema: {
             model:<?= $kendoModelArray ?>,
             data : function(response){
@@ -82,6 +85,7 @@
             },
             error: function(e) {
                 console.log(e.errors); // displays "Invalid query"
+                alert('error occured');
             },
             total: function(response) {
                 return response.<?= $cName;?>.paging.<?= $cName;?>.count;

@@ -2,6 +2,7 @@
 namespace App\Controller\Api;
 
 use App\Controller\AppController;
+use Cake\Core\Exception\Exception;
 use Cake\Event\Event;
 use Cake\Cache\Cache;
 use Cake\Utility\Inflector;
@@ -87,26 +88,32 @@ class ApiController extends AppController
     /**
      * @throws NotFoundException
      */
-    public function add()
-    {
-
-        if(isset($this->request->data['action']) && $this->request->data['action'] == "create" && isset($this->request->data['models'])) {
-            $kendoData = json_decode($this->request->data['models'],true);
-        } else {
-            throw new NotFoundException(__('Invalid create request'));
-        }
-        $tableobj = $this->{$this->tableName}->newEntity();
-
-        if ($this->request->is('post')) {
-            $tableobj = $this->{$this->tableName}->patchEntity($tableobj, $kendoData[0]);
-            if ($this->{$this->tableName}->save($tableobj)) {
-                $this->message = 'saved record';
+    public function add(){
+        try{
+            if(isset($this->request->data['action']) && $this->request->data['action'] == "create" && isset($this->request->data['models'])) {
+                $kendoData = json_decode($this->request->data['models'],true);
             } else {
-               $this->success = false;
-               $this->message = 'could not saved record';
-               $this->error = $this->{$this->tableName}->error;
+                throw new NotFoundException(__('Invalid create request'));
             }
+            $tableobj = $this->{$this->tableName}->newEntity();
+
+            if ($this->request->is('post')) {
+
+                $tableobj = $this->{$this->tableName}->patchEntity($tableobj, $kendoData[0]);
+                if ($this->{$this->tableName}->save($tableobj)) {
+
+                    $this->message = 'saved record';
+                } else {
+
+                    $this->success = false;
+                    $this->message = 'could not saved record';
+                    $this->validationErrors = $tableobj->errors();
+                }
+            }
+        }catch(Exception $e){
+
         }
+
 
     }
 
@@ -117,19 +124,23 @@ class ApiController extends AppController
      * @return void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
-        $data = json_decode($this->request->data['models'],true);
-        $recipe = $this->{$this->tableName}->get($id);
-        if ($this->request->is(['post', 'put'])) {
-            $recipe = $this->{$this->tableName}->patchEntity($recipe, $data[0]);
-            if ($this->{$this->tableName}->save($recipe)) {
-                $this->message = $this->tableName. ' details Saved';
-            } else {
-                $this->success = false;
-                $this->message = 'Error';
+    public function edit($id = null){
+        try{
+            $data = json_decode($this->request->data['models'],true);
+            $recipe = $this->{$this->tableName}->get($id);
+            if ($this->request->is(['post', 'put'])) {
+                $recipe = $this->{$this->tableName}->patchEntity($recipe, $data[0]);
+                if ($this->{$this->tableName}->save($recipe)) {
+                    $this->message = $this->tableName. ' details Saved';
+                } else {
+                    $this->success = false;
+                    $this->message = 'Error';
+                }
             }
+        }catch(Exception $e){
+
         }
+
     }
 
     /**
@@ -152,11 +163,14 @@ class ApiController extends AppController
 
     public function beforeRender(Event $event){
         parent::beforeRender($event);
+
             $this->set([
             $this->responseObjName => $this->responseData,
+            'validationErrors'=>$this->validationErrors,
+            'success'=>$this->success,
             'message' =>$this->message,
-            '_serialize' => [$this->responseObjName,'message'],
-            'success'=>$this->success
+
+            '_serialize' => [$this->responseObjName,'message','success','validationErrors'],
         ]);
     }
 }
