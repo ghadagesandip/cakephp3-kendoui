@@ -16,7 +16,7 @@ class AdminTable extends Table{
         $this->kendoPrefix = "admin";
 
         //show only this fields
-        $this->kendoGridDontShow = array('created','updated');
+        $this->kendoGridDontShow = array('created','updated','modified','deleted');
 
         //hide these fields from grid
         $this->kendoGridHide = array('password');

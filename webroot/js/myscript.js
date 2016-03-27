@@ -28,6 +28,18 @@ $(function() {
             ]
         });
 
+        if($(".datepicker").length){
+            $(".datepicker").kendoDatePicker({
+                // defines the start view
+                start: "year",
+
+                // defines when the calendar should return date
+                depth: "year",
+
+                // display month and year in the input
+                format: "dd-MM-yyyy"
+            });
+        }
 
 
 });

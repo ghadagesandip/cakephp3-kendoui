@@ -48,6 +48,17 @@ class KendoBehavior extends Behavior{
                 $kendoModelArr[$field]['type'] = $this->dataTypes[$schema->column($field)['type']];
             }
 
+            if($schema->column($field)['type']=='date'){
+                $kendoModelArr[$field]['format']= "{0:dd-MM-yyyy}";
+                $kendoModelArr[$field]['class']= "datepicker";
+                $kendoModelArr[$field]['template'] = '#= kendo.toString('.$field.', "dd-MM-yyyy") #';
+            }
+
+            if($schema->column($field)['type']=='datetime'){
+                $kendoModelArr[$field]['format']= "{0: dd-MM-yyyy HH:mm:ss}";
+
+            }
+
             if(in_array($field,$tableObj->kendoNonEditable)){
                 $kendoModelArr[$field]['editable'] = false;
             }
@@ -69,7 +80,6 @@ class KendoBehavior extends Behavior{
                 }
 
             }
-
             /********  validation rules ends here *******/
         }
 
@@ -90,16 +100,16 @@ class KendoBehavior extends Behavior{
         foreach($schema->columns() as $idx=>$field){
 
             if(isset($tableObj->kendoOverrideColumns[$field])){
-                $cols[$c] = $tableObj->kendoOverrideColumns[$field];
+                $cols[$c] = $tableObj->kendoOverrideColumns[$field]; $c++;
                 continue;
             }
 
             if(in_array($field,$tableObj->kendoGridHide)){
-                $cols[$c]['hidden'] = true;
+                $cols[$c]['hidden'] = true; $c++;
             }
 
             if(in_array($field,$tableObj->kendoGridDontShow)){
-              continue;
+                continue;
             }
 
             $cols[$c]['lockable'] = false;
@@ -119,8 +129,6 @@ class KendoBehavior extends Behavior{
         if(isset($tableObj->kendoCommands) && !empty($tableObj->kendoCommands)){
             $cols[$c]['command'] = $tableObj->kendoCommands;
         }
-
-
 
         return $cols;
 

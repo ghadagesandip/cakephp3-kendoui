@@ -39,9 +39,21 @@ class UsersTable extends AdminTable{
             'active'=>array(
                 'field'=>'active',
                 'title'=>'active',
-                'values'=>'ds_MaleFemale',
-                'editor'=>'ed_MaleFemale'
+                'values'=>array(
+                    array('value'=>'1','text'=>'Active'),
+                    array('value'=>'0','text'=>'In-active')
+                )
+                //'values'=>'ds_MaleFemale',
+                //'editor'=>'ed_MaleFemale'
             ),
+            'gender'=>array(
+                'field'=>'gender',
+                'title'=>'Gender',
+                'values'=>array(
+                    array('value'=>'1','text'=>'Male'),
+                    array('value'=>'0','text'=>'Female')
+                )
+            )
         );
         $this->hasMany('Bookmarks', [
             'foreignKey' => 'user_id'
