@@ -39,20 +39,19 @@ class UsersTable extends AdminTable{
             'active'=>array(
                 'field'=>'active',
                 'title'=>'active',
+                "editor"=>"ed_Active",
                 'values'=>array(
                     array('value'=>'1','text'=>'Active'),
                     array('value'=>'0','text'=>'In-active')
-                )
-                //'values'=>'ds_MaleFemale',
-                //'editor'=>'ed_MaleFemale'
+                ),
             ),
             'gender'=>array(
                 'field'=>'gender',
                 'title'=>'Gender',
-                'values'=>array(
-                    array('value'=>'1','text'=>'Male'),
-                    array('value'=>'0','text'=>'Female')
-                )
+//                'values'=>array(
+//                    array('value'=>'1','text'=>'Male'),
+//                    array('value'=>'0','text'=>'Female')
+//                )
             )
         );
         $this->hasMany('Bookmarks', [

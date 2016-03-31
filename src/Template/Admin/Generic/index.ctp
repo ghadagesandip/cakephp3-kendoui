@@ -121,7 +121,18 @@
             confirmation: true,
             confirmDelete: "Yes"
         },
-        columns: <?php echo $kendoGridCols;?>
+        columns: <?php echo $kendoGridCols;?>,
+        edit: function(e){
+            if(e.model.id==0){
+                console.log("add popup is called");
+            }else{
+                console.log("edit popup called");
+                e.container.find("input[name=password]").removeAttr("required");
+                e.container.find("input[name=confirm_password]").removeAttr("required");
+            }
+            e.container.find("input[name=password]").attr("type", "password");
+            e.container.find("input[name=confirm_password]").attr("type", "password");
+        }
     });
 
 <?php $this->Html->scriptEnd(); ?>

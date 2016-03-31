@@ -42,4 +42,17 @@ $(function() {
         }
 
 
+
+    function ed_Active(container, options) {
+        $('<input name="' + options.field + '" data-bind="value:' + options.field + '"/>').appendTo(container).kendoDropDownList({
+            autoBind: true,
+            optionLabel: {
+                text:"Please choose",
+                value:"0"
+            },
+            dataTextField: "text",
+            dataValueField: "value"
+        });
+    }
+
 });
