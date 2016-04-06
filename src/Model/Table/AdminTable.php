@@ -20,6 +20,9 @@ class AdminTable extends Table{
 
         //hide these fields from grid
         $this->kendoGridHide = array('password');
+
+        $this->passwordFields = array('password','confirm_password');
+
         $this->order = array('id'=> 'desc');
         $this->kendoIgnoreAssoc = array();
         $this->kendoCustomColumns = array();

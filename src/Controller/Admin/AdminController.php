@@ -85,10 +85,12 @@ class AdminController extends AppController{
     public function index(){
         $cName = Inflector::underscore($this->request->controller);
         $kendoModelArray = json_encode($this->{$this->name}->makeKendoModel());
-        //pr($kendoModelArray);exit;
+        //pr($this->{$this->name}->makeKendoModel());exit;
+
         $kendoGridCols = $this->{$this->name}->makeKendoGridCols();
         //pr($kendoGridCols);exit;
         $kendoGridCols = json_encode($kendoGridCols);
+        //pr($kendoGridCols);exit;
         $this->set(compact('kendoModelArray','cName','kendoGridCols'));
 
         if (!file_exists(APP . 'Template' .DS.'Admin'. DS . $this->request->params['controller'] . DS. 'index.ctp')) {

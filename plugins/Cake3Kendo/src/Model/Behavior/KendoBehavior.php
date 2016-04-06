@@ -19,7 +19,8 @@ class KendoBehavior extends Behavior{
         "float" => "number",
         "text" => "string",
         "boolean" => "boolean",
-        "timestamp" => "date"
+        "timestamp" => "date",
+        "password" => "password"
     );
 
     public $tableAlise = null;
@@ -57,6 +58,10 @@ class KendoBehavior extends Behavior{
             if($schema->column($field)['type']=='datetime'){
                 $kendoModelArr[$field]['format']= "{0: dd-MM-yyyy HH:mm:ss}";
 
+            }
+
+            if(in_array($field,$tableObj->passwordFields)){
+                $kendoModelArr[$field]['type']= "password";
             }
 
             if(in_array($field,$tableObj->kendoNonEditable)){
